@@ -12,9 +12,10 @@ provider "aws" {
 }
 
 resource "aws_launch_template" "main" {
-  name_prefix   = var.aws_launch_template.prefix
-  image_id      = var.aws_launch_template.ami
-  instance_type = var.aws_launch_template.instance_class
+  name_prefix   = var.launch_template.prefix
+  image_id      = var.launch_template.ami
+  instance_type = var.launch_template.instance_class
+  tags = var.tags
 }
 
 resource "aws_autoscaling_group" "main" {
@@ -25,5 +26,13 @@ resource "aws_autoscaling_group" "main" {
   launch_template {
     id = aws_launch_template.main.id
     version = "$Latest"
+  }
+  dynamic "tag" {
+    for_each = var.tags
+    content {
+      key = tag.key
+      value = tag.value
+      propagate_at_launch = true
+    }
   }
 }

@@ -3,7 +3,7 @@ variable "region" {
   type = string
 }
 
-variable "aws_launch_template" {
+variable "launch_template" {
   type = object({
     ami            = string
     prefix         = string
@@ -18,4 +18,9 @@ variable "scaling_group" {
     max_size           = number
     min_size           = number
   })
+}
+
+variable "tags" {
+  type = map(string)
+  default = {}
 }
