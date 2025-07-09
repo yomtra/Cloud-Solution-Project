@@ -47,7 +47,7 @@ resource "aws_cloudwatch_metric_alarm" "high_network_bandwidth_alarm" {
 }
 
 #tracks http 400 errors in the ALB
-resource "aws_cloudwatch_metric_alarm" "400_error_alarm" {
+resource "aws_cloudwatch_metric_alarm" "_400_error_alarm" {
   alarm_name          = "400-error-alarm"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
