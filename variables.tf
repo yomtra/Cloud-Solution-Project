@@ -1,3 +1,12 @@
+variable "aws_region" {
+  default     = "us-west-1"
+  description = "AWS region to deploy resources"
+}
+
+variable "aws_profile" {
+  default     = "default"
+  description = "AWS CLI named profile"
+}
 variable "project" {}
 variable "environment" {}
 variable "vpc_cidr" {}

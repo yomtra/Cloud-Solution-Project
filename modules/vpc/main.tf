@@ -1,6 +1,3 @@
-provider "aws" {
-  region = "us-west-1"
-}
 
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr # e.g. "10.0.0.0/16"
@@ -62,7 +59,7 @@ resource "aws_route_table_association" "web" {
 resource "aws_subnet" "app" {
   count                   = length(var.app_subnet_cidrs)
   vpc_id                  = aws_vpc.main.id
-  cidr_block              = var.web_subnet_cidrs[count.index]
+  cidr_block              = var.app_subnet_cidrs[count.index]
   availability_zone       = local.azs_app[count.index]
   map_public_ip_on_launch = false
   tags = {
