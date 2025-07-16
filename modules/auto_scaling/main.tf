@@ -42,7 +42,9 @@ resource "aws_autoscaling_group" "main" {
       propagate_at_launch = true
     }
   }
-  target_group_arns = var.attach_to_lb ? [var.lb_arn] : [""]
+  # FIXED: Changed empty string to empty list to prevent AWS errors
+  target_group_arns = var.attach_to_lb ? [var.lb_arn] : []
+  # target_group_arns = var.attach_to_lb ? [var.lb_arn] : [""]  # OLD - caused errors
 }
 
 resource "aws_autoscaling_policy" "policies" {
@@ -55,12 +57,14 @@ resource "aws_autoscaling_policy" "policies" {
     policy_type = "SimpleScaling"
 }
 
+# COMMENTED OUT: Duplicate attachment method - target_group_arns in ASG handles this automatically
 # Attach the Auto Scaling Group to the ALB target group
-resource "aws_autoscaling_attachment" "my_asg_attachment" {
-  count = var.attach_to_lb ? 1 : 0
-    autoscaling_group_name = aws_autoscaling_group.main.name
-    lb_target_group_arn = var.lb_arn
-}
+# resource "aws_autoscaling_attachment" "my_asg_attachment" {
+#   count = var.attach_to_lb ? 1 : 0
+#     autoscaling_group_name = aws_autoscaling_group.main.name
+#     lb_target_group_arn = var.lb_arn
+# }
+# NOTE: Use either target_group_arns in ASG OR separate attachment resource, not both
 
 resource "aws_cloudwatch_metric_alarm" "reduce_ec2_alarm" {
   for_each = var.cloudwatch_alarms
