@@ -9,9 +9,6 @@ Ex:
     security_group_id = "sg-016476a2309bc0e3b"
   }
 
-  ```
-```
-
   scaling_group = {
     availability_zones = ["us-west-1a", "us-west-1c"]
     desired_capacity = 1
@@ -20,10 +17,12 @@ Ex:
   }
 
   ```
-```
+
 
   The module also takes a list of scaling policies
   Ex:
+
+```
 
     scaling_policies = {
     increase-ec2 = {
