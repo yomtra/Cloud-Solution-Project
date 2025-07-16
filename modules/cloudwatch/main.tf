@@ -3,14 +3,18 @@ resource "aws_sns_topic" "alarm_notifications" {
 }
 
 resource "aws_sns_topic_subscription" "email_subscription" {
+  for_each = toset(var.notification_emails)
+
   topic_arn = aws_sns_topic.alarm_notifications.arn
   protocol  = "email"
-  endpoint  = var.notification_email
+  endpoint  = each.value
 }
 
 #monitors the instance for network bandwidth usage less than 300 mbps
 resource "aws_cloudwatch_metric_alarm" "low_network_bandwidth_alarm" {
-  alarm_name          = "low-bandwidth-usage-alarm"
+  for_each = toset(var.web_instance_ids)
+
+  alarm_name          = "low-bandwidth-usage-alarm-${each.key}"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1
   metric_name         = "NetworkIn"
@@ -23,13 +27,15 @@ resource "aws_cloudwatch_metric_alarm" "low_network_bandwidth_alarm" {
   alarm_actions     = [aws_sns_topic.alarm_notifications.arn]
 
   dimensions = {
-    InstanceId = var.web_instance_id
+    InstanceId = each.value
   }
 }
 
 #monitors the instance for network bandwidth usage more than 750 mbps
 resource "aws_cloudwatch_metric_alarm" "high_network_bandwidth_alarm" {
-  alarm_name          = "high-bandwidth-usage-alarm"
+  for_each = toset(var.web_instance_ids)
+
+  alarm_name          = "high-bandwidth-usage-alarm-${each.key}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
   metric_name         = "NetworkIn"
@@ -42,13 +48,15 @@ resource "aws_cloudwatch_metric_alarm" "high_network_bandwidth_alarm" {
   alarm_actions     = [aws_sns_topic.alarm_notifications.arn]
 
   dimensions = {
-    InstanceId = var.web_instance_id
+    InstanceId = each.value
   }
 }
 
 #tracks http 400 errors in the ALB
-resource "aws_cloudwatch_metric_alarm" "_400_error_alarm" {
-  alarm_name          = "400-error-alarm"
+resource "aws_cloudwatch_metric_alarm" "___400_error_alarm" {
+  for_each = toset(var.alb_name_ids)
+
+  alarm_name          = "400-error-alarm-${each.key}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
   metric_name         = "HTTPCode_ELB_4XX_Count"
@@ -61,12 +69,14 @@ resource "aws_cloudwatch_metric_alarm" "_400_error_alarm" {
   alarm_actions     = [aws_sns_topic.alarm_notifications.arn]
 
   dimensions = {
-    LoadBalancer = var.alb_name_id
+    LoadBalancer = each.value
   }
 }
-#monitors for high cpu usage of the instance
+#monitors for high cpu usage of the instances
 resource "aws_cloudwatch_metric_alarm" "high_cpu_usage_alarm" {
-  alarm_name          = "high-cpu-usage-alarm"
+  for_each = toset(var.web_instance_ids)
+
+  alarm_name          = "high-cpu-usage-alarm-${each.key}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
   metric_name         = "CPUUtilization"
@@ -79,12 +89,14 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu_usage_alarm" {
   alarm_actions     = [aws_sns_topic.alarm_notifications.arn]
 
   dimensions = {
-    InstanceId = var.web_instance_id
+    InstanceId = each.value
   }
 }
-#monitors for low cpu usage of the instance
+#monitors for low cpu usage of the instances
 resource "aws_cloudwatch_metric_alarm" "low_cpu_usage_alarm" {
-  alarm_name          = "low-cpu-usage-alarm"
+  for_each = toset(var.web_instance_ids)
+
+  alarm_name          = "low-cpu-usage-alarm-${each.key}"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1
   metric_name         = "CPUUtilization"
@@ -97,7 +109,7 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu_usage_alarm" {
   alarm_actions     = [aws_sns_topic.alarm_notifications.arn]
 
   dimensions = {
-    InstanceId = var.web_instance_id
+    InstanceId = each.value
   }
 }
 
