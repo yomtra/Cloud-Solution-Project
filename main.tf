@@ -10,3 +10,10 @@ module "vpc" {
   app_subnet_cidrs = var.app_subnet_cidrs
   db_subnet_cidrs  = var.db_subnet_cidrs
 }
+
+module "cloudwatch" {
+  source = "./modules/cloudwatch"
+  notification_emails = [] 
+  web_instance_ids = [] 
+  alb_name_ids = [] 
+}
