@@ -1,7 +1,3 @@
-# S3 MODULE - SECURE STORAGE CONFIGURATION
-# This module provides encrypted S3 storage for the GoGreen Insurance application
-# Implements security best practices with KMS encryption and access controls
-# Purpose: Stores application data, documents, and backups securely
 
 resource "aws_kms_key" "s3_key" {
   description             = "KMS key for S3 bucket encryption"
