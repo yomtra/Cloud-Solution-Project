@@ -1,20 +1,14 @@
-locals {
-  private_subnet_3_id = "10.64.0.0/24"  # Replace with real Subnet ID for 10.64.0.0/24
-  private_subnet_4_id = "10.80.0.0/24"  # Replace with real Subnet ID for 10.80.0.0/24
-  vpc_id              = "10.0.0.0/16"     # Replace with your VPC ID
-  region              = "us-west-1"
-}
- 
+
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "${var.name}-rds-subnet-group"
-  subnet_ids = [local.private_subnet_3_id, local.private_subnet_4_id]
+  subnet_ids = [var.private_subnet_3_id, var.private_subnet_4_id]
   tags       = var.tags
 }
  
 resource "aws_security_group" "rds_sg" {
   name        = "${var.name}-rds-sg"
   description = "RDS DB access"
-  vpc_id      = local.vpc_id
+  vpc_id      = var.vpc_id
  
   ingress {
     description = "Allow MySQL"
