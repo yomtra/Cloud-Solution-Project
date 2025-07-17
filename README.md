@@ -19,31 +19,31 @@ The goal of this module is to create a secure and scalable identity and access m
 
 ---
 
-## 📦 Features
+## Features
 
-- ✅ 3 IAM Groups:
+- 3 IAM Groups:
   - `SysAdmin`
   - `DBAdmin`
   - `Monitor`
 
-- ✅ 8 IAM Users:
+- 8 IAM Users:
   - `sysadmin1`, `sysadmin2`
   - `dbadmin1`, `dbadmin2`
   - `monitoruser1`, `monitoruser2`, `monitoruser3`, `monitoruser4`
 
-- ✅ Group Membership:
+- Group Membership:
   - Each user is assigned to their corresponding group using `aws_iam_user_group_membership`.
 
-- ✅ IAM Policies:
+- IAM Policies:
   - Each group is granted AWS managed policies via group attachment.
 
-- ✅ Password Policy:
+- Password Policy:
   - Strong password enforcement with complexity, length, and expiration settings.
 
-- ✅ MFA:
+- MFA:
   - Multi-Factor Authentication (MFA) manually enabled for all users via AWS Console.
 
-- ✅ EC2 IAM Role:
+- EC2 IAM Role:
   - Role `ec2_instance_role` created and attached to an EC2 instance profile.
   - Attached policy: `AmazonS3ReadOnlyAccess`
 
