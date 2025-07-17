@@ -13,7 +13,7 @@ This project was built by **Parviz Davronov** as part of the Cloud Architect pro
 
 ---
 
-## 🚀 Project Overview
+## Project Overview
 
 The goal of this module is to create a secure and scalable identity and access management structure using Infrastructure as Code (IaC). The module is reusable and follows best practices for AWS IAM configuration.
 
@@ -49,7 +49,7 @@ The goal of this module is to create a secure and scalable identity and access m
 
 ---
 
-## 🛠 Module Structure
+## Module Structure
 
 ```hcl
 cap_prj/
