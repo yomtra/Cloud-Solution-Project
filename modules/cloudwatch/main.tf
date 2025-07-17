@@ -53,7 +53,7 @@ resource "aws_cloudwatch_metric_alarm" "high_network_bandwidth_alarm" {
 }
 
 #tracks http 400 errors in the ALB
-resource "aws_cloudwatch_metric_alarm" "___400_error_alarm" {
+resource "aws_cloudwatch_metric_alarm" "_400_error_alarm" {
   for_each = toset(var.alb_name_ids)
 
   alarm_name          = "400-error-alarm-${each.key}"

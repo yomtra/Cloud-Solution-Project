@@ -3,6 +3,7 @@ variable "name" {
   type        = string
   #value = "Gafur_test"
 }
+
  
 variable "engine" {
   default     = "mysql"
@@ -36,4 +37,20 @@ variable "password" {
 variable "tags" {
   type    = map(string)
   default = {}
+}
+
+variable "db_subnet_ids" {
+  type = list(string)
+}
+
+variable "vpc_id" {
+  type = string
+}
+
+variable "environment" {
+  type = string
+}
+
+variable "project" {
+  type = string
 }

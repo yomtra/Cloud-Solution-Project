@@ -17,3 +17,19 @@ module "cloudwatch" {
   web_instance_ids = [] 
   alb_name_ids = [] 
 }
+
+module "rds" {
+  source              = "./modules/rds_module"
+  name                = var.name
+  instance_class      = var.instance_class
+  engine              = var.engine
+  engine_version      = var.engine_version
+  allocated_storage   = var.allocated_storage
+  username            = var.username
+  password            = var.password
+  db_subnet_ids       = module.vpc.db_subnet_ids
+  vpc_id              = module.vpc.vpc_id
+  environment         = var.environment
+  project             = var.project
+  tags                = var.tags
+}
