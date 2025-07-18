@@ -24,3 +24,7 @@ terraform.tfstate*
 *.tfstate*
 *.tfstate
 *.tfstate.*
+
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
