@@ -20,3 +20,4 @@ override.tf.json
 >>>>>>> module/vpc
 terraform.tfstate*
 terraform.tfstate*
+.terraform/

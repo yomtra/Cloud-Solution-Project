@@ -117,3 +117,21 @@ resource "aws_iam_instance_profile" "ec2_profile" {
   name = "ec2_instance_profile"
   role = aws_iam_role.ec2_role.name
 }
+
+resource "aws_iam_access_key" "sysadmin1_key" {
+  user = aws_iam_user.sysadmin1.name
+}
+
+resource "aws_iam_access_key" "sysadmin2_key" {
+  user = aws_iam_user.sysadmin2.name
+}
+
+output "sysadmin1_access_key_id" {
+  value     = aws_iam_access_key.sysadmin1_key.id
+  sensitive = true
+}
+
+output "sysadmin1_secret_access_key" {
+  value     = aws_iam_access_key.sysadmin1_key.secret
+  sensitive = true
+}
