@@ -18,3 +18,15 @@ override.tf
 override.tf.json
 *.tfplan
 >>>>>>> module/vpc
+terraform.tfstate*
+terraform.tfstate*
+.terraform/
+*.tfstate*
+*.tfstate
+*.tfstate.*
+
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+terraform.tfstate
+terraform.tfstate*
