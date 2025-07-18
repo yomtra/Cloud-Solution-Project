@@ -21,3 +21,6 @@ override.tf.json
 terraform.tfstate*
 terraform.tfstate*
 .terraform/
+*.tfstate*
+*.tfstate
+*.tfstate.*
