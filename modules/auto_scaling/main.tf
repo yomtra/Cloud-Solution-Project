@@ -2,7 +2,7 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 6.0"
+      version = "6.2.0"
     }
   }
 }
@@ -20,6 +20,11 @@ resource "aws_launch_template" "main" {
   key_name               = var.launch_template.key_name
   user_data              = var.launch_template.user_data
   vpc_security_group_ids = [var.launch_template.security_group_id]
+
+  iam_instance_profile {
+    arn = var.launch_template.instance_profile_arn
+  }
+
   monitoring {
     enabled = var.launch_template.detailed_monitoring
   }

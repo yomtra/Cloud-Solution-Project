@@ -13,6 +13,7 @@ variable "launch_template" {
     key_name = optional(string)
     security_group_id = optional(string)
     user_data = optional(string)
+    instance_profile_arn = optional(string)
   })
 }
 
@@ -48,6 +49,7 @@ variable "lb_arn" {
   type = string
   default = ""
 }
+
 variable "cloudwatch_alarms" {
   type = map(object({
     name = string

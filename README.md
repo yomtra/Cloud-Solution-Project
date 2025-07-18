@@ -1,13 +1,6 @@
 # cap_prj
-# cap_prj
 
-# AWS IAM Module — Terraform Project
-
-This project was built by **Parviz Davronov** as part of the Cloud Architect program...
-...
-
-
-# AWS IAM Module — Terraform Project
+# AWS IAM Module – Terraform Project
 
 This project was built by **Parviz Davronov** as part of the Cloud Architect program. It defines and manages AWS IAM resources using **Terraform**, including users, groups, password policies, and an EC2 role with S3 access.
 

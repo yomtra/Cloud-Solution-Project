@@ -29,3 +29,19 @@ output "app_nacl_id" {
 output "db_nacl_id" {
   value = module.vpc.db_nacl_id
 }
+
+output "rds_endpoint" {
+  value = module.rds.rds_endpoint
+}
+
+output "rds_read_replica_endpoint" {
+  value = module.rds.rds_read_replica_endpoint
+}
+
+output "rds_username" {
+  value = module.rds.rds_username
+}
+
+output "rds_port" {
+  value = module.rds.rds_port
+}
