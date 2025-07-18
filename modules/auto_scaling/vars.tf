@@ -48,6 +48,7 @@ variable "lb_arn" {
   type = string
   default = ""
 }
+
 variable "cloudwatch_alarms" {
   type = map(object({
     name = string
@@ -61,4 +62,9 @@ variable "cloudwatch_alarms" {
     insufficient_data_actions = optional(list(string))
     policy_to_use = string
   }))
+}
+
+variable "instance_profile" {
+  type = string
+  default =  ""
 }

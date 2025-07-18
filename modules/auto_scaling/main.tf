@@ -20,6 +20,11 @@ resource "aws_launch_template" "main" {
   key_name               = var.launch_template.key_name
   user_data              = var.launch_template.user_data
   vpc_security_group_ids = [var.launch_template.security_group_id]
+
+  iam_instance_profile {
+    arn = var.instance_profile
+  }
+
   monitoring {
     enabled = var.launch_template.detailed_monitoring
   }
