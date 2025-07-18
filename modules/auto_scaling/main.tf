@@ -22,7 +22,7 @@ resource "aws_launch_template" "main" {
   vpc_security_group_ids = [var.launch_template.security_group_id]
 
   iam_instance_profile {
-    arn = var.instance_profile
+    arn = var.launch_template.instance_profile_arn
   }
 
   monitoring {

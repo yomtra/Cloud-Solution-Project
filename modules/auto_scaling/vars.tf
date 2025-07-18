@@ -13,6 +13,7 @@ variable "launch_template" {
     key_name = optional(string)
     security_group_id = optional(string)
     user_data = optional(string)
+    instance_profile_arn = optional(string)
   })
 }
 
@@ -62,9 +63,4 @@ variable "cloudwatch_alarms" {
     insufficient_data_actions = optional(list(string))
     policy_to_use = string
   }))
-}
-
-variable "instance_profile" {
-  type = string
-  default =  ""
 }
