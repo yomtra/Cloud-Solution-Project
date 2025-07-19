@@ -1,6 +1,9 @@
+<<<<<<< Updated upstream
 provider "aws" {
   region = "us-west-1"
 }
+=======
+>>>>>>> Stashed changes
 module "vpc" {
   source           = "./modules/vpc"
   project          = var.project
