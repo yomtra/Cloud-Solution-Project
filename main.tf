@@ -6,7 +6,6 @@ module "vpc" {
   web_subnet_cidrs = var.web_subnet_cidrs
   app_subnet_cidrs = var.app_subnet_cidrs
   db_subnet_cidrs  = var.db_subnet_cidrs
- iam/parviz
 }# main.tf (root)
 module "iam" {
   source = "./modules/iam"
@@ -167,5 +166,4 @@ module "app_tier_scaling_group" {
   }
 
   region = var.aws_region
-main
 }
