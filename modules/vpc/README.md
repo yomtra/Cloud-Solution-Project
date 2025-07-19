@@ -1,4 +1,4 @@
-                             ✅ Terraform AWS VPC Module
+✅ Terraform AWS VPC Module
 
 This module provisions a complete **Virtual Private Cloud (VPC)** architecture in AWS. It includes support for public/private subnets, NAT Gateways, route tables, and optional tagging.
 
@@ -63,5 +63,7 @@ modules/vpc/
 ├── variables.tf
 ├── outputs.tf
 └── README.md
+
+
 👤 Author
-Replace with your name or GitHub profile
+ILAYDA OTCU
