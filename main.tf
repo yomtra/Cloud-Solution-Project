@@ -1,7 +1,3 @@
-provider "aws" {
-  region = "us-west-1"
-}
-
 module "vpc" {
   source           = "./modules/vpc"
   project          = var.project
