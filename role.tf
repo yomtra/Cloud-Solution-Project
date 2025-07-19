@@ -1,3 +1,6 @@
+#This file creates two ec2 roles
+#One just for SSM access for the web tier, and one for SSM and access to relevant s3 buckets for the app tier
+
 locals {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -53,7 +56,7 @@ resource "aws_iam_policy" "s3_policy" {
           "s3:PutObject",
         ]
         Effect   = "Allow"
-        Resource = ["arn:aws:s3:::mybucketmarch16dsdsdsd"] #Replace with list of buckets from s3 module
+        Resource = ["arn:aws:s3:::mybucketmarch16dsdsdsd"] #Replace with list of buckets from s3 module!!
       },
     ]
   })
