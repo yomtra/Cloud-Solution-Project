@@ -19,7 +19,7 @@ resource "aws_vpc_security_group_ingress_rule" "web_tier_in" {
 
 #Allows traffic on all ports out to each app subnet
 resource "aws_vpc_security_group_egress_rule" "web_tier_out" {
-  for_each = var.app_subnet_cidrs
+  for_each = {for idx, cdir in var.app_subnet_cidrs : idx => cidr }
 
   security_group_id = aws_security_group.web_tier_sg.id
 
@@ -39,7 +39,7 @@ resource "aws_security_group" "app_tier_sg" {
 
 #Allows traffic in from each web subnet
 resource "aws_vpc_security_group_ingress_rule" "app_tier_in" {
-  for_each = var.web_subnet_cidrs
+  for_each = {for idx, cdir in var.web_subnet_cidrs : idx => cidr }
 
   security_group_id = aws_security_group.app_tier_sg.id
 
@@ -51,7 +51,7 @@ resource "aws_vpc_security_group_ingress_rule" "app_tier_in" {
 
 #Allows traffic out to each db subnet on mysql port
 resource "aws_vpc_security_group_egress_rule" "app_tier_out" {
-  for_each = var.db_subnet_cidrs
+  for_each = {for idx, cdir in var.db_subnet_cidrs : idx => cidr }
 
   security_group_id = aws_security_group.app_tier_sg.id
 

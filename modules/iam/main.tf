@@ -125,13 +125,3 @@ resource "aws_iam_access_key" "sysadmin1_key" {
 resource "aws_iam_access_key" "sysadmin2_key" {
   user = aws_iam_user.sysadmin2.name
 }
-
-output "sysadmin1_access_key_id" {
-  value     = aws_iam_access_key.sysadmin1_key.id
-  sensitive = true
-}
-
-output "sysadmin1_secret_access_key" {
-  value     = aws_iam_access_key.sysadmin1_key.secret
-  sensitive = true
-}
