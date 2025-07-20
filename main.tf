@@ -46,7 +46,7 @@ module "web_tier_scaling_group" {
     ami = "ami-061ad72bc140532fd" 
     prefix = "capstone"
     instance_class = "t2.micro"
-    security_group_id = aws_security_group.web_tier_sg.id #Replace with actual security group!!
+    security_group_id = aws_security_group.web_tier_sg.id 
     instance_profile_arn  = aws_iam_instance_profile.ssm_instance_profile.arn
   }
 
