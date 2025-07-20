@@ -10,45 +10,41 @@ resource "aws_sns_topic_subscription" "email_subscription" {
   endpoint  = each.value
 }
 
-#monitors the instance for network bandwidth usage less than 300 mbps
-resource "aws_cloudwatch_metric_alarm" "low_network_bandwidth_alarm" {
-  for_each = toset(var.web_instance_ids)
-
-  alarm_name          = "low-bandwidth-usage-alarm-${each.key}"
+#monitors average network out for asg 750
+resource "aws_cloudwatch_metric_alarm" "low_asg_network_out_alarm" {
+  alarm_name          = "low-asg-network-out-alarm"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1
-  metric_name         = "NetworkIn"
-  namespace           = "AWS/EC2"
+  metric_name         = "GroupOut"
+  namespace           = "AWS/AutoScaling"
   period              = 60
-  statistic           = "Sum"
+  statistic           = "Average"
   threshold           = 2250000000   
   alarm_description = "Alarm when network bandwidth is less than 300 mbps"
   insufficient_data_actions = []
   alarm_actions     = [aws_sns_topic.alarm_notifications.arn]
 
   dimensions = {
-    InstanceId = each.value
+    AutoScalingGroupName = var.autoscaling_group_name
   }
 }
 
-#monitors the instance for network bandwidth usage more than 750 mbps
-resource "aws_cloudwatch_metric_alarm" "high_network_bandwidth_alarm" {
-  for_each = toset(var.web_instance_ids)
-
-  alarm_name          = "high-bandwidth-usage-alarm-${each.key}"
+#monitors average network in for asg 300
+resource "aws_cloudwatch_metric_alarm" "high_asg_network_in_alarm" {
+  alarm_name          = "high-asg-network-in-alarm"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
-  metric_name         = "NetworkIn"
-  namespace           = "AWS/EC2"
+  metric_name         = "GroupIn"
+  namespace           = "AWS/AutoScaling"
   period              = 60
-  statistic           = "Sum"
+  statistic           = "Average"
   threshold           = 5625000000 
   alarm_description = "Alarm when network bandwidth exceeds 750 mbps"
   insufficient_data_actions = []
   alarm_actions     = [aws_sns_topic.alarm_notifications.arn]
 
   dimensions = {
-    InstanceId = each.value
+    AutoScalingGroupName = var.autoscaling_group_name
   }
 }
 
@@ -72,15 +68,13 @@ resource "aws_cloudwatch_metric_alarm" "___400_error_alarm" {
     LoadBalancer = each.value
   }
 }
-#monitors for high cpu usage of the instances
+#monitors for high cpu usage of the asg
 resource "aws_cloudwatch_metric_alarm" "high_cpu_usage_alarm" {
-  for_each = toset(var.web_instance_ids)
-
-  alarm_name          = "high-cpu-usage-alarm-${each.key}"
+  alarm_name          = "high-cpu-usage-alarm"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/EC2"
+  metric_name         = "GroupAverageCPUUtilization"
+  namespace           = "AWS/AutoScaling"
   period              = 60
   statistic           = "Average"
   threshold           = 75  
@@ -89,18 +83,16 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu_usage_alarm" {
   alarm_actions     = [aws_sns_topic.alarm_notifications.arn]
 
   dimensions = {
-    InstanceId = each.value
+    AutoScalingGroupName = var.autoscaling_group_name
   }
 }
-#monitors for low cpu usage of the instances
+#monitors for low cpu usage of the asg
 resource "aws_cloudwatch_metric_alarm" "low_cpu_usage_alarm" {
-  for_each = toset(var.web_instance_ids)
-
-  alarm_name          = "low-cpu-usage-alarm-${each.key}"
+  alarm_name          = "low-cpu-usage-alarm"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 1
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/EC2"
+  metric_name         = "GroupAverageCPUUtilization"
+  namespace           = "AWS/AutoScaling"
   period              = 60
   statistic           = "Average"
   threshold           = 30   
@@ -109,7 +101,7 @@ resource "aws_cloudwatch_metric_alarm" "low_cpu_usage_alarm" {
   alarm_actions     = [aws_sns_topic.alarm_notifications.arn]
 
   dimensions = {
-    InstanceId = each.value
+    AutoScalingGroupName = var.autoscaling_group_name
   }
 }
 
