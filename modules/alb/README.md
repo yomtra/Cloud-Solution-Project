@@ -4,15 +4,15 @@ This Terraform module creates an AWS Application Load Balancer (ALB) with target
 
 ## Features
 
-- ✅ **Application Load Balancer**: Internet-facing or internal ALB
-- ✅ **Target Groups**: Web tier and optional app tier target groups
-- ✅ **Health Checks**: Configurable health check settings
-- ✅ **HTTPS Support**: Optional SSL/TLS termination
-- ✅ **Path-based Routing**: Route traffic based on URL patterns
-- ✅ **Session Stickiness**: Optional session persistence
-- ✅ **Access Logs**: Optional ALB access logging to S3
-- ✅ **Security**: Configurable security groups and deletion protection
-- ✅ **Monitoring**: CloudWatch metrics integration
+- Application Load Balancer: Internet-facing or internal ALB
+- Target Groups: Web tier and optional app tier target groups
+- Health Checks: Configurable health check settings
+- HTTPS Support: Optional SSL/TLS termination
+- Path-based Routing: Route traffic based on URL patterns
+- Session Stickiness: Optional session persistence
+- Access Logs: Optional ALB access logging to S3
+- Security: Configurable security groups and deletion protection
+- Monitoring: CloudWatch metrics integration
 
 ## Architecture
 
@@ -165,11 +165,11 @@ resource "aws_autoscaling_attachment" "app_tier" {
 
 ## Security Considerations
 
-- **Security Groups**: Configure appropriate security groups for the ALB
-- **HTTPS**: Use HTTPS listeners for production environments
-- **Access Logs**: Enable access logs for monitoring and compliance
-- **Health Checks**: Configure appropriate health check endpoints
-- **Deletion Protection**: Enable for production environments
+- Security Groups: Configure appropriate security groups for the ALB
+- HTTPS: Use HTTPS listeners for production environments
+- Access Logs: Enable access logs for monitoring and compliance
+- Health Checks: Configure appropriate health check endpoints
+- Deletion Protection: Enable for production environments
 
 ## Monitoring
 

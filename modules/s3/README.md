@@ -4,12 +4,12 @@ This Terraform module creates an AWS S3 bucket with KMS encryption and configura
 
 ## Features
 
-- ✅ **S3 Bucket**: Creates a single S3 bucket with customizable name
-- ✅ **KMS Encryption**: Bucket encrypted with customer-managed KMS key
-- ✅ **Versioning**: Optional bucket versioning (enabled by default)
-- ✅ **Public Access Block**: Blocks public access by default for security
-- ✅ **Bucket Policy**: Configurable IAM-based access permissions
-- ✅ **Tagging**: Consistent resource tagging
+- S3 Bucket: Creates a single S3 bucket with customizable name
+- KMS Encryption: Bucket encrypted with customer-managed KMS key
+- Versioning: Optional bucket versioning (enabled by default)
+- Public Access Block: Blocks public access by default for security
+- Bucket Policy: Configurable IAM-based access permissions
+- Tagging: Consistent resource tagging
 
 ## Usage
 
@@ -93,10 +93,10 @@ module "s3_bucket" {
 
 ## Security Features
 
-- **Encryption at Rest**: All objects are encrypted using customer-managed KMS keys
-- **Public Access Blocked**: All public access is blocked by default
-- **IAM-based Access**: Access controlled through IAM roles and policies
-- **Versioning**: Object versioning enabled for data protection
+- Encryption at Rest: All objects are encrypted using customer-managed KMS keys
+- Public Access Blocked: All public access is blocked by default
+- IAM-based Access: Access controlled through IAM roles and policies
+- Versioning: Object versioning enabled for data protection
 
 ## Author
 
