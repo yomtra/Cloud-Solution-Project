@@ -1,5 +1,4 @@
 # S3 Module - Outputs Configuration
-# Define outputs that other modules or root configuration can use
 
 output "bucket_id" {
   description = "The ID of the S3 bucket"
