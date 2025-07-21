@@ -45,3 +45,19 @@ output "rds_username" {
 output "rds_port" {
   value = module.rds.rds_port
 }
+
+# S3 Module Outputs
+output "s3_bucket_id" {
+  description = "The ID of the S3 bucket"
+  value       = module.s3_storage.bucket_id
+}
+
+output "s3_bucket_arn" {
+  description = "The ARN of the S3 bucket"
+  value       = module.s3_storage.bucket_arn
+}
+
+output "s3_kms_key_id" {
+  description = "The KMS key ID used for S3 encryption"
+  value       = module.s3_storage.kms_key_id
+}

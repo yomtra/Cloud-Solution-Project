@@ -167,3 +167,18 @@ module "app_tier_scaling_group" {
 
   region = var.aws_region
 }
+
+# S3 Module for secure storage with KMS encryption
+module "s3_storage" {
+  source = "./modules/s3"
+  
+  bucket_name       = "${var.project}-${var.environment}-storage-bucket"
+  environment       = var.environment
+  project_name      = var.project
+  enable_versioning = true
+  
+  # Integration with existing modules
+  allowed_iam_roles = [
+    # Add IAM role ARNs that need access to this bucket
+  ]
+}
