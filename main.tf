@@ -167,3 +167,45 @@ module "app_tier_scaling_group" {
 
   region = var.aws_region
 }
+
+# S3 Module for secure storage with KMS encryption
+module "s3_storage" {
+  source = "./modules/s3"
+  
+  bucket_name       = "${var.project}-${var.environment}-storage-bucket"
+  environment       = var.environment
+  project_name      = var.project
+  enable_versioning = true
+  
+  # Integration with existing modules
+  allowed_iam_roles = [
+    # Add IAM role ARNs that need access to this bucket
+  ]
+}
+
+# ALB Module for load balancing web and app tiers
+module "application_load_balancer" {
+  source = "./modules/alb"
+  
+  alb_name           = "${var.project}-${var.environment}-alb"
+  vpc_id             = module.vpc.vpc_id
+  subnet_ids         = module.vpc.web_subnet_ids
+  security_group_ids = [aws_security_group.web_tier_sg.id]
+  
+  # Multi-tier configuration
+  enable_app_tier         = true
+  app_tier_port          = 8080
+  app_tier_path_patterns = ["/api/*", "/app/*", "/backend/*"]
+  
+  # Health check configuration
+  health_check_path     = "/"
+  app_health_check_path = "/health"
+  
+  # Integration with S3 for access logs (optional)
+  enable_access_logs = false  # Set to true if you want to use S3 bucket for logs
+  access_logs_bucket = module.s3_storage.bucket_id
+  
+  environment  = var.environment
+  project_name = var.project
+  tags         = var.tags
+}
