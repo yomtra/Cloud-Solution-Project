@@ -5,8 +5,10 @@ variable "aws_region" {
 
 
 
-
-
+variable "ami" {
+  description = "AMI used for all ec2 instances"
+  type = string
+}
 variable "aws_profile" {
   default     = "default"
   description = "AWS CLI named profile"

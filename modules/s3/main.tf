@@ -73,7 +73,7 @@ resource "aws_s3_bucket_policy" "main_bucket_policy" {
         Sid       = "AllowRootUserFullAccess"
         Effect    = "Allow"
         Principal = {
-          AWS = "arn:aws:iam::${data.aws_caller_identity.current.account_id}:root"
+          AWS = var.root_user_arn
         }
         Action   = "s3:*"
         Resource = [
@@ -101,6 +101,3 @@ resource "aws_s3_bucket_policy" "main_bucket_policy" {
     ]
   })
 }
-
-# Data source to get current AWS account ID
-data "aws_caller_identity" "current" {}

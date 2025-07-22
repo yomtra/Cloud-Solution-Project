@@ -24,9 +24,9 @@ resource "aws_vpc_security_group_egress_rule" "web_tier_out" {
   security_group_id = aws_security_group.web_tier_sg.id
 
   cidr_ipv4   = each.value
-  from_port   = -1
-  ip_protocol = "tcp"
-  to_port     = -1
+  from_port   = 0
+  ip_protocol = -1
+  to_port     = 0
 }
 
 resource "aws_security_group" "app_tier_sg" {
@@ -44,9 +44,9 @@ resource "aws_vpc_security_group_ingress_rule" "app_tier_in" {
   security_group_id = aws_security_group.app_tier_sg.id
 
   cidr_ipv4   = each.value
-  from_port   = -1
-  ip_protocol = "tcp"
-  to_port     = -1
+  from_port   = 0
+  ip_protocol = -1
+  to_port     = 0
 }
 
 #Allows traffic out to each db subnet on mysql port

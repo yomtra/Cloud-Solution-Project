@@ -6,21 +6,23 @@ module "vpc" {
   web_subnet_cidrs = var.web_subnet_cidrs
   app_subnet_cidrs = var.app_subnet_cidrs
   db_subnet_cidrs  = var.db_subnet_cidrs
-}# main.tf (root)
+}
+
 module "iam" {
   source = "./modules/iam"
 }
 
-output "iam_ec2_instance_profile" {
-  value = module.iam.ec2_instance_profile_name
-
+#Required to allow the cloudwatch module to know the name of the ALB before applying
+locals {
+  alb_name = "${var.project}-${var.environment}-alb"
 }
 
 module "cloudwatch" {
   source = "./modules/cloudwatch"
-  notification_emails = [] 
-  web_instance_ids = [] 
-  alb_name_ids = [] 
+  notification_emails = ["example@example.com"]
+  alb_name_ids = [local.alb_name]
+  autoscaling_group_name = module.web_tier_scaling_group.autoscaling_group_name
+  depends_on = [ module.app_tier_scaling_group ]
 }
 
 module "rds" {
@@ -43,15 +45,15 @@ module "rds" {
 module "web_tier_scaling_group" {
   source = "./modules/auto_scaling"
   launch_template = {
-    ami = "ami-061ad72bc140532fd" 
-    prefix = "capstone"
+    ami = var.ami
+    prefix = var.project
     instance_class = "t2.micro"
     security_group_id = aws_security_group.web_tier_sg.id 
     instance_profile_arn  = aws_iam_instance_profile.ssm_instance_profile.arn
   }
 
   scaling_group = {
-    subnet_ids = ["subnet-03de533a5b992b8ea"] #Replace with actual subnet ids!!
+    subnet_ids = module.vpc.web_subnet_ids
     desired_capacity = 1
     max_size = 3
     min_size = 1
@@ -97,25 +99,23 @@ module "web_tier_scaling_group" {
       policy_to_use = "increase-ec2"
     }
   }
-  tags = {
-    Name = "test"
-  }
+  tags = var.tags
 
-  region = var.aws_region
+  depends_on = [ module.vpc ]
 }
 
 module "app_tier_scaling_group" {
   source = "./modules/auto_scaling"
   launch_template = {
-    ami = "ami-061ad72bc140532fd" 
-    prefix = "capstone"
+    ami = var.ami
+    prefix = var.project
     instance_class = "t2.micro"
-    security_group_id = aws_security_group.app_tier_sg.id #Replace with actual security group!!
+    security_group_id = aws_security_group.app_tier_sg.id 
     instance_profile_arn = aws_iam_instance_profile.s3_and_ssm_instance_profile.arn
   }
 
   scaling_group = {
-    subnet_ids = ["subnet-03de533a5b992b8ea"] #Replace with actual subnet ids!!
+    subnet_ids = module.vpc.app_subnet_ids
     desired_capacity = 1
     max_size = 3
     min_size = 1
@@ -161,33 +161,37 @@ module "app_tier_scaling_group" {
       policy_to_use = "increase-ec2"
     }
   }
-  tags = {
-    Name = "test"
-  }
-
-  region = var.aws_region
+  tags = var.tags
+  
+  depends_on = [ module.vpc ]
 }
+
+# Data source to get current AWS account ID
+
 
 # S3 Module for secure storage with KMS encryption
 module "s3_storage" {
   source = "./modules/s3"
   
-  bucket_name       = "${var.project}-${var.environment}-storage-bucket"
+  bucket_name       = "${var.project}-${var.environment}-storage-bucket123123"
   environment       = var.environment
   project_name      = var.project
   enable_versioning = true
+  root_user_arn     = module.iam.sysadmin1_arn
+  enable_bucket_policy = false
   
   # Integration with existing modules
   allowed_iam_roles = [
-    # Add IAM role ARNs that need access to this bucket
+  module.iam.sysadmin2_arn
   ]
 }
+
 
 # ALB Module for load balancing web and app tiers
 module "application_load_balancer" {
   source = "./modules/alb"
   
-  alb_name           = "${var.project}-${var.environment}-alb"
+  alb_name           = local.alb_name
   vpc_id             = module.vpc.vpc_id
   subnet_ids         = module.vpc.web_subnet_ids
   security_group_ids = [aws_security_group.web_tier_sg.id]

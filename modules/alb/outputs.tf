@@ -6,6 +6,11 @@ output "alb_id" {
   value       = aws_lb.main_alb.id
 }
 
+output "alb_name" {
+  description = "The name of the Application Load Balancer"
+  value       = aws_lb.main_alb.id
+}
+
 output "alb_arn" {
   description = "The ARN of the Application Load Balancer"
   value       = aws_lb.main_alb.arn

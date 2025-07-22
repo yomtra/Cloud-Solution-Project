@@ -73,3 +73,8 @@ variable "allowed_iam_roles" {
   type        = list(string)
   default     = []
 }
+
+variable "root_user_arn" {
+  description = "Account root user ARN"
+  type = string
+}

@@ -1,8 +1,3 @@
-
-variable "region" {
-  type = string
-}
-
 variable "launch_template" {
   type = object({
     ami            = string

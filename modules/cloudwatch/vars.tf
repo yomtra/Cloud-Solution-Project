@@ -3,7 +3,7 @@ variable "notification_emails" {
 }
 
 variable "autoscaling_group_name" {
-  type = list
+  type = string
 }
 
 variable "alb_name_ids" {

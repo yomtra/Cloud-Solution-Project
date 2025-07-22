@@ -7,10 +7,6 @@ terraform {
   }
 }
 
-provider "aws" {
-  region = var.region
-}
-
 resource "aws_launch_template" "main" {
   name_prefix   =          var.launch_template.prefix
   image_id               = var.launch_template.ami

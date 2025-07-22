@@ -1,13 +1,11 @@
 locals {
-  private_subnet_3_id = "10.64.0.0/24"  # Replace with real Subnet ID for 10.64.0.0/24
-  private_subnet_4_id = "10.80.0.0/24"  # Replace with real Subnet ID for 10.80.0.0/24
-  vpc_id              = "10.0.0.0/16"     # Replace with your VPC ID
+  vpc_id              = var.vpc_id     # Replace with your VPC ID
   region              = "us-west-1"
 }
  
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "${var.name}-rds-subnet-group"
-  subnet_ids = [local.private_subnet_3_id, local.private_subnet_4_id]
+  subnet_ids = var.db_subnet_ids
   tags       = var.tags
 }
  
@@ -40,6 +38,7 @@ resource "aws_db_instance" "primary" {
   engine                  = var.engine
   engine_version          = var.engine_version
   allocated_storage       = var.allocated_storage
+  backup_retention_period = 7
   username                = var.username
   password                = var.password
   db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group.name
@@ -54,10 +53,11 @@ resource "aws_db_instance" "primary" {
 resource "aws_db_instance" "read_replica" {
   identifier              = "${var.name}-read-replica" # need all vars.
   instance_class          = var.instance_class
-  replicate_source_db     = aws_db_instance.primary.id
+  replicate_source_db     = aws_db_instance.primary.arn
   db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group.name
   vpc_security_group_ids  = [aws_security_group.rds_sg.id]
+  skip_final_snapshot     = true
   publicly_accessible     = false
-  availability_zone       = "us-west-1b"
+  availability_zone       = "us-west-1c"
   tags                    = var.tags
 }
