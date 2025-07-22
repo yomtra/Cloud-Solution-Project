@@ -1,5 +1,16 @@
 This module creates a single auto scaling group that uses SimpleScaling and a launch template. 
 Ex:
+# CloudWatch Alarm Module
+
+This module creates a single scaling group and launch instance that use Simple Scaling, as well as related resources.
+
+## Resources
+
+- `aws_launch_template` – Launch template that will be used by the scaling group
+- `aws_autoscaling_group` – Auto scaling group
+- `aws_autoscaling_policy` – SimpleScaling policy that can cause scaling up or down
+
+Example launch templates and policies
 ```
 
   launch_template = {
@@ -17,10 +28,6 @@ Ex:
   }
 
   ```
-
-
-  The module also takes a list of scaling policies
-  Ex:
 
 ```
 
@@ -42,23 +49,21 @@ Ex:
   ```
 
 These policies must be activated by Cloudwatch alarms, with each alarm having a "policy_to_use" attribute that must be set to the name of one of the scaling policies
-Ex:
 
 ```
-
-variable "cloudwatch_alarms" {
-  type = map(object({
-    name = string
-    comparison_operator = string
-    evaluation_periods = number
-    metric_name = string
-    period = number
-    statistic = string
-    threshold = number
-    alarm_description = string
-    insufficient_data_actions = optional(list(string))
-    policy_to_use = string
-  }))
+cloudwatch_alarms = {
+    reduce_ec2 = {
+      name = "reduce-ec2-alarm"
+      comparison_operator       = "LessThanOrEqualToThreshold"
+      evaluation_periods        = 2
+      metric_name               = "CPUUtilization"
+      namespace                 = "AWS/EC2"
+      period                    = 120
+      statistic                 = "Average"
+      threshold                 = 30
+      alarm_description         = "This metric monitors ec2 cpu utilization, if it goes below 30% for 2 periods it will trigger an alarm."
+      policy_to_use = "reduce-ec2"
+    }
 }
 
 ```
