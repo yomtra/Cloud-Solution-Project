@@ -24,9 +24,9 @@ resource "aws_iam_instance_profile" "s3_and_ssm_instance_profile" {
 }
 
 resource "aws_iam_role" "s3_and_ssm_role" {
-  name = "ec2_role_for_ssm_and_s3"
+  name               = "ec2_role_for_ssm_and_s3"
   assume_role_policy = local.assume_role_policy
-  tags = var.tags
+  tags               = var.tags
 }
 
 resource "aws_iam_instance_profile" "ssm_instance_profile" {
@@ -37,9 +37,9 @@ resource "aws_iam_instance_profile" "ssm_instance_profile" {
 }
 
 resource "aws_iam_role" "ssm_role" {
-  name = "ec2_role_for_ssm"
+  name               = "ec2_role_for_ssm"
   assume_role_policy = local.assume_role_policy
-  tags = var.tags
+  tags               = var.tags
 }
 
 #Policy for ec2 instances that need to access s3
@@ -68,7 +68,7 @@ data "aws_iam_policy" "ssm_managed_core_policy" {
 }
 
 resource "aws_iam_role_policy_attachment" "ssm_attach" {
-  for_each = toset([aws_iam_role.ssm_role.name, aws_iam_role.s3_and_ssm_role.name])
+  for_each   = toset([aws_iam_role.ssm_role.name, aws_iam_role.s3_and_ssm_role.name])
   role       = each.value
   policy_arn = data.aws_iam_policy.ssm_managed_core_policy.arn
 }

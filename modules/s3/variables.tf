@@ -1,6 +1,4 @@
 # S3 Module - Variables Configuration
-# Define all input variables for the S3 module
-
 variable "bucket_name" {
   description = "Name of the S3 bucket"
   type        = string

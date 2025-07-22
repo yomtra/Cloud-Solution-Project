@@ -71,7 +71,6 @@ resource "aws_lb_target_group" "web_tier_tg" {
   )
 }
 
-# Create Target Group for App Tier (optional)
 resource "aws_lb_target_group" "app_tier_tg" {
   count = var.enable_app_tier ? 1 : 0
   
@@ -103,13 +102,11 @@ resource "aws_lb_target_group" "app_tier_tg" {
   )
 }
 
-# Create HTTP Listener (redirects to HTTPS if SSL enabled)
 resource "aws_lb_listener" "http_listener" {
   load_balancer_arn = aws_lb.main_alb.arn
   port              = "80"
   protocol          = "HTTP"
 
-  # Redirect to HTTPS if SSL is enabled
   dynamic "default_action" {
     for_each = var.enable_https ? [1] : []
     content {
@@ -122,7 +119,6 @@ resource "aws_lb_listener" "http_listener" {
     }
   }
 
-  # Forward to target group if HTTPS is not enabled
   dynamic "default_action" {
     for_each = var.enable_https ? [] : [1]
     content {
@@ -134,7 +130,6 @@ resource "aws_lb_listener" "http_listener" {
   tags = var.tags
 }
 
-# Create HTTPS Listener (only if SSL is enabled)
 resource "aws_lb_listener" "https_listener" {
   count = var.enable_https ? 1 : 0
   
@@ -152,7 +147,6 @@ resource "aws_lb_listener" "https_listener" {
   tags = var.tags
 }
 
-# Create listener rules for path-based routing (optional)
 resource "aws_lb_listener_rule" "app_tier_rule" {
   count = var.enable_app_tier && var.enable_https ? 1 : 0
   
@@ -173,7 +167,6 @@ resource "aws_lb_listener_rule" "app_tier_rule" {
   tags = var.tags
 }
 
-# Create listener rules for HTTP if HTTPS is not enabled
 resource "aws_lb_listener_rule" "app_tier_rule_http" {
   count = var.enable_app_tier && !var.enable_https ? 1 : 0
   
