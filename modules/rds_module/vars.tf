@@ -1,3 +1,16 @@
+# Jurabek: Added missing app_subnet_cidrs variable for RDS security group
+variable "app_subnet_cidrs" {
+  description = "List of app tier subnet CIDRs for RDS access"
+  type        = list(string)
+}
+
+# Jurabek: Added missing region variable for RDS module
+variable "region" {
+  description = "AWS region"
+  type        = string
+  default     = "us-west-1"
+}
+
 variable "name" {
   description = "Name prefix for RDS resources"
   type        = string

@@ -34,9 +34,10 @@ output "rds_endpoint" {
   value = module.rds.rds_endpoint
 }
 
-output "rds_read_replica_endpoint" {
-  value = module.rds.rds_read_replica_endpoint
-}
+# Jurabek: Temporarily commented out read replica output until replica is re-enabled
+# output "rds_read_replica_endpoint" {
+#   value = module.rds.rds_read_replica_endpoint
+# }
 
 output "rds_username" {
   value = module.rds.rds_username

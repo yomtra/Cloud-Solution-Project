@@ -13,28 +13,28 @@ variable "aws_profile" {
 }
 variable "project" {
   description = "project_name"
-  type = string
+  type        = string
 }
 variable "environment" {
   description = "Deployment environment"
-  type = string
+  type        = string
 }
 variable "vpc_cidr" {
   description = "CIDR block for the VPC"
-  type = string
+  type        = string
 }
 variable "web_subnet_cidrs" {
   description = "list of CIDRs for web subnets"
-  type = list(string)
+  type        = list(string)
 }
 variable "app_subnet_cidrs" {
-   description = "list of CIDRs for app subnets"
-  type = list(string)
+  description = "list of CIDRs for app subnets"
+  type        = list(string)
 }
-variable "db_subnet_cidrs" { 
+variable "db_subnet_cidrs" {
   description = "list of CIDRs for db subnets"
-  type = list(string)
-  
+  type        = list(string)
+
 }
 
 

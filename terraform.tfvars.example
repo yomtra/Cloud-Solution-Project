@@ -1,0 +1,35 @@
+# Terraform Variables Configuration Template
+# Copy this file to terraform.tfvars and fill in your specific values
+
+# Project Information
+project     = "cloud-solution"
+environment = "dev"
+
+# AWS Configuration
+aws_region  = "us-west-1"  # Change to your preferred region
+aws_profile = "default"    # Change to your AWS CLI profile
+
+# VPC Network Configuration
+vpc_cidr         = "10.0.0.0/16"
+web_subnet_cidrs = ["10.0.1.0/24", "10.0.2.0/24"]
+app_subnet_cidrs = ["10.0.3.0/24", "10.0.4.0/24"]
+db_subnet_cidrs  = ["10.0.5.0/24", "10.0.6.0/24"]
+
+# NAT Gateway Configuration
+enable_nat_gateway = true
+
+# RDS Database Configuration
+name              = "myapp-database"
+instance_class    = "db.t3.micro"
+engine            = "mysql"
+engine_version    = "8.0"
+allocated_storage = 20
+username          = "admin"
+password          = "CHANGE-THIS-TO-SECURE-PASSWORD"
+
+# Resource Tags
+tags = {
+  Project     = "Cloud-Solution-Project"
+  Owner       = "Your-Name-Here"
+  Environment = "dev"
+}
