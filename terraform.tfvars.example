@@ -25,7 +25,7 @@ engine            = "mysql"
 engine_version    = "8.0"
 allocated_storage = 20
 username          = "admin"
-password          = "CHANGE-THIS-TO-SECURE-PASSWORD"  # ⚠️  IMPORTANT: Use a strong password!
+password          = "CHANGE-THIS-TO-SECURE-PASSWORD"
 
 # Resource Tags
 tags = {
